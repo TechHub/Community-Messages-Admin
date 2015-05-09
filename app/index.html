@@ -1,0 +1,128 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>community messages admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/fontawesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+</head>
+
+<body ng-app="communityMessagesApp" ng-controller="MainCtrl">
+
+    <div class="container">
+        <h1>Community messages updater <button class="btn btn-primary btnAdd pull-right" ng-click="addMessage()"><i class="fa fa-plus"></i>&nbsp;Add a new message</button></h1>
+        <div class="panel panel-primary panel-news" ng-repeat="message in data | orderBy: -'timestamp' ">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-9 single-news-container">
+                        <div class="single-news-title">
+                            <input type="text" class="form-control input-title" ng-model="message.title" placeholder="Edit title">
+                        </div>
+                        <div class="single-news-content">
+                            <textarea cols="30" rows="4" class="form-control input-content" ng-model="message.text" placeholder="Text here"></textarea>
+                        </div>
+                        <div class="single-news-alert text-danger">
+                            <input type="text" class="form-control input-alert" ng-model="message.alert" placeholder="Alert or expire date?">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 text-center">
+                        <img ng-src="{{ message.image || 'http://d363bjfyowzbm6.cloudfront.net/images/website/techhub_3d_logo_png.png' }}" alt="" class="img-responsive center-block single-news-image">
+                        <small>(max size 260x250)</small>
+                        <br>
+                        <button class="btn btn-primary" ng-click="setImageUrl(message)">Change image URL</button>
+                        <button class="btn btn-danger" ng-click="clearImageUrl(message)"><i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="form-inline">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <button class="btn btn-primary btnSave" data-loading-text="<i class='fa fa-refresh fa-spin'></i>" ng-click="data.$save(message)"><i class="fa fa-save"></i>&nbsp;Save</button>
+                            <button class="btn btn-danger btnDelete" ng-click="data.$remove(message)"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                            <div class="spacer"></div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="message.campus"> Campus
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="message.oldStreet"> Old Street
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="message.shoreditch"> Shoreditch
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <p>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-model="message.sticky"> Sticky?
+                                    </label>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-limit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="lead text-center">
+                        You can't have more than 3 message.
+                        <br>Please delete an old one.
+                        <br>
+                        <br><i class="fa fa-frown-o"></i>
+                        <br>
+                    </p>
+                    <p class="text-center">
+                        <a href="#" class="btn btn-lg btn-default" data-dismiss="modal">Okay</a>
+                    </p>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/firebase/firebase.js"></script>
+    <script src="/bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>
